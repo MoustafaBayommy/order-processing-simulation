@@ -1,9 +1,11 @@
 package com.e_commerce.order_processing.payments;
 
 import com.e_commerce.order_processing.orders.PaymentDetails;
+import com.e_commerce.order_processing.util.HttpException;
 import com.stripe.exception.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,16 +19,8 @@ public class PaymentService {
     public void deductOrderValue(PaymentDetails paymentDetails,float amount){
         try {
             paymentGatway.chargeNewCard(paymentDetails, amount);
-        } catch (APIConnectionException e) {
-            e.printStackTrace();
-        } catch (APIException e) {
-            e.printStackTrace();
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-        } catch (InvalidRequestException e) {
-            e.printStackTrace();
-        } catch (CardException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+        throw new HttpException(HttpStatus.FAILED_DEPENDENCY,"payment failed message :  "+e.getMessage());
         }
     }
 }

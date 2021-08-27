@@ -92,20 +92,29 @@ class OrderProcessingTests {
 		secondItem.setAmount(1);
 		dto.setBasket(new HashSet<>(Arrays.asList(firstItem, secondItem)));
 		dto.setShippingAddress("1st cairo , egypt");
-		//SHOULD BE INVALID and return 3  validation errors
+		//SHOULD BE INVALID and return 4  validation errors
 		given(spec).when()
 				.body(dto)
 				.post("orders")
 				.then().statusCode(HttpStatus.BAD_REQUEST.value())
 				.assertThat()
-				.body("errors.size()", is(3));
+				.body("errors.size()", is(4));
 
 		//fix validation errors
 		paymentDetails.setCvc("223");
-		paymentDetails.setCardNumber("512356566");
+		paymentDetails.setCardNumber("4242424242424242");
 		paymentDetails.setExpMonth("05");
-		paymentDetails.setExpYear("2022");
+		//use un valid credit card
+		paymentDetails.setExpYear("2020");
+		paymentDetails.setCvc("245");
+		given(spec).when()
+				.body(dto)
+				.post("orders")
+				.then().statusCode(HttpStatus.FAILED_DEPENDENCY.value());
 
+
+		//VALID credit card
+		paymentDetails.setExpYear("2022");
 		given(spec).when()
 				.body(dto)
 				.post("orders")
