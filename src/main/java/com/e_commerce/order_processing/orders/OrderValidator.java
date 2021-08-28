@@ -1,9 +1,8 @@
 package com.e_commerce.order_processing.orders;
 
-import com.e_commerce.order_processing.orders.validationRules.BasketLimitPolicy;
-import com.e_commerce.order_processing.orders.validationRules.FraudDetectionPolicy;
-import com.e_commerce.order_processing.orders.validationRules.ItemsAvaliablityPolicy;
-import com.e_commerce.order_processing.orders.validationRules.OrderPolicy;
+import com.e_commerce.order_processing.orders.policies.BasketLimitPolicy;
+import com.e_commerce.order_processing.orders.policies.FraudCustomerPolicy;
+import com.e_commerce.order_processing.orders.policies.OrderPolicy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +15,17 @@ public class OrderValidator {
     List<OrderPolicy> policies;
 
 
-    public OrderValidator(@Autowired ItemsAvaliablityPolicy itemsAvaliablityPolicy,@Autowired FraudDetectionPolicy fraudPolicy, @Autowired BasketLimitPolicy basketLimitPolicy) {
-        policies = Arrays.asList(itemsAvaliablityPolicy,basketLimitPolicy, fraudPolicy);
+
+    public OrderValidator(@Autowired FraudCustomerPolicy fraudPolicy, @Autowired BasketLimitPolicy basketLimitPolicy) {
+        policies = Arrays.asList(basketLimitPolicy, fraudPolicy);
+    }
+
+    public List<OrderPolicy> getPolicies() {
+        return policies;
+    }
+
+    public void setPolicies(List<OrderPolicy> policies) {
+        this.policies = policies;
     }
 
     public void validate(Order order) {

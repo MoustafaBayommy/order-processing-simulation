@@ -1,4 +1,4 @@
-package com.e_commerce.order_processing.orders.validationRules;
+package com.e_commerce.order_processing.orders.policies;
 
 import com.e_commerce.order_processing.orders.Order;
 import com.e_commerce.order_processing.orders.OrderService;
@@ -9,17 +9,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
-public class FraudDetectionPolicy implements OrderPolicy {
+public class BasketLimitPolicy implements OrderPolicy {
 
     @Autowired
-    private OrderService orderService;
+    OrderService orderService;
 
     @Override
     public void validate(Order order) throws HttpException {
-        float basketTotal=orderService.getBasketTotal(order);
-        if(basketTotal>1500){
-            throw new HttpException(HttpStatus.FORBIDDEN, " fraud detection");
+        float basketTotal = orderService.getBasketTotal(order);
+        if (basketTotal < 100) {
+            throw new HttpException(HttpStatus.BAD_REQUEST, "Basket value should be more than 100");
         }
     }
 }

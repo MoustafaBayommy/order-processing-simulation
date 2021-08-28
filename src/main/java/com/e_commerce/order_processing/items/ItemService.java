@@ -3,24 +3,20 @@ package com.e_commerce.order_processing.items;
 import com.e_commerce.order_processing.orders.BasketItem;
 import com.e_commerce.order_processing.orders.OrderItem;
 import com.e_commerce.order_processing.util.HttpException;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-@RequiredArgsConstructor
 @Service
 public class ItemService {
-    private final ItemRepository repo;
+    @Autowired
+    ItemRepository repo;
 
     public void save() {
         Item product = new Item();
@@ -37,7 +33,7 @@ public class ItemService {
         List<OrderItem> items = new ArrayList<>();
 
         basketItems.forEach(basketItem -> {
-            Item item = repo.findById(basketItem.getItem()).orElseGet(null) ;
+            Item item = repo.findById(basketItem.getItem()).orElseGet(null);
             if (item == null) {
                 throw new HttpException(HttpStatus.BAD_REQUEST, "not valid itemId");
             }
@@ -55,14 +51,14 @@ public class ItemService {
     }
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    public void  updateStock(Set<BasketItem> basketItems){
-        basketItems.forEach(basketItem ->{
-            decrementStockAmount(basketItem.getItem(),basketItem.getAmount());
-    });
+    public void updateStock(Set<BasketItem> basketItems) {
+        basketItems.forEach(basketItem -> {
+            decrementStockAmount(basketItem.getItem(), basketItem.getAmount());
+        });
 
-}
+    }
 
-   private void  decrementStockAmount(String id, int amount){
-    this.repo.decrementBalanceBy(amount,id);
+    private void decrementStockAmount(String id, int amount) {
+        this.repo.decrementBalanceBy(amount, id);
     }
 }

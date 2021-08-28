@@ -17,8 +17,12 @@ public class Order {
     private Customer customer;
     private String status;
     private String paymentMethod;
-    @OneToMany(targetEntity = OrderItem.class,cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = OrderItem.class, cascade = CascadeType.PERSIST)
     private List<OrderItem> items;
+
+    public static OrderBuilder builer() {
+        return new OrderBuilder();
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -26,24 +30,23 @@ public class Order {
             return true;
         if (obj == null)
             return false;
-            if (!(obj instanceof Order)) {
+        if (!(obj instanceof Order)) {
             return false;
         }
         Order other = (Order) obj;
         return getId().equals(other.getId());
     }
 
-
     @Override
     public String toString() {
-        return "Order{" +
+        if (this == null) {
+            return null;
+        }
+        return "Order {" +
                 "id='" + id + '\'' +
-                ", customer=" + customer.getId() +
+                ", customer=" + customer.toString() +
                 ", status='" + status + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 '}';
     }
-public static  OrderBuilder builer(){
-        return new OrderBuilder();
-}
 }

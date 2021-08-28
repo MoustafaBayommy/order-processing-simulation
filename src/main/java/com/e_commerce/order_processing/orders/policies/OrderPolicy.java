@@ -1,7 +1,6 @@
-package com.e_commerce.order_processing.orders.validationRules;
+package com.e_commerce.order_processing.orders.policies;
 
 import com.e_commerce.order_processing.orders.Order;
-import com.e_commerce.order_processing.orders.OrderDto;
 import com.e_commerce.order_processing.util.HttpException;
 
 public interface OrderPolicy {

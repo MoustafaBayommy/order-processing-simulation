@@ -1,6 +1,7 @@
 package com.e_commerce.order_processing.items;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -8,10 +9,10 @@ import java.util.List;
 
 @RestController()
 @RequestMapping("items")
-@RequiredArgsConstructor
 public class ItemController {
 
-    private final ItemService service;
+    @Autowired
+     ItemService service;
 
 
     @GetMapping()
