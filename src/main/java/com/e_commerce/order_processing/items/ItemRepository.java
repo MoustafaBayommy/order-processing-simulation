@@ -10,8 +10,9 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, String> {
 
-  List<Item>   findByIdAndStockAmountGreaterThanEqual(String id, int amount);
-  @Modifying
-  @Query("update Item i set i.stockAmount = i.stockAmount -?1 where i.id = ?2")
-  void decrementBalanceBy(int amount, String id);
+    List<Item> findByIdAndStockAmountGreaterThanEqual(String id, int amount);
+
+    @Modifying
+    @Query("update Item i set i.stockAmount = i.stockAmount -?1 where i.id = ?2")
+    void decrementBalanceBy(int amount, String id);
 }

@@ -1,6 +1,5 @@
 package com.e_commerce.order_processing.items;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,7 +11,7 @@ import java.util.List;
 public class ItemController {
 
     @Autowired
-     ItemService service;
+    ItemService service;
 
 
     @GetMapping()

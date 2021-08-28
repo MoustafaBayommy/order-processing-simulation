@@ -13,8 +13,8 @@ public class NotificationService {
 
 
     @EventListener(classes = OrderCreationEvent.class)
-    public void sendNotificationToCustomer(OrderCreationEvent event){
-        log.info(" *******send order ready for shiping notification to customer    "+event.getOrder().getCustomer().toString());
+    public void sendNotificationToCustomer(OrderCreationEvent event) {
+        log.info(" *******send order ready for shiping notification to customer    " + event.getOrder().getCustomer().toString());
     }
 
 }

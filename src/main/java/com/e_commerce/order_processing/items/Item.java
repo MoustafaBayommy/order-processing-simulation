@@ -1,7 +1,11 @@
 package com.e_commerce.order_processing.items;
+
 import lombok.Data;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
 @Data
@@ -13,8 +17,8 @@ public class Item {
     private String name;
     private String description;
     @Column(nullable = false)
-    private int stockAmount=0;
-    private float price=0;
+    private int stockAmount = 0;
+    private float price = 0;
 
     @Override
     public boolean equals(Object obj) {

@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class StripPayment implements PaymentGatway{
+public class StripPayment implements PaymentGatway {
     @Value("${STRIPE_SECRET_KEY}")
     private String secretKey;
 
@@ -25,9 +25,9 @@ public class StripPayment implements PaymentGatway{
 
     @Override
     public String chargeNewCard(PaymentDetails paymentDetails, float amount) throws PaymentHandlingException, APIConnectionException, APIException, AuthenticationException, InvalidRequestException, CardException {
-        String cardToken=getPaymentToken(paymentDetails);
+        String cardToken = getPaymentToken(paymentDetails);
         Map<String, Object> chargeParams = new HashMap<String, Object>();
-        chargeParams.put("amount", (int)(amount * 100));
+        chargeParams.put("amount", (int) (amount * 100));
         chargeParams.put("currency", "USD");
         chargeParams.put("source", cardToken);
         Charge charge = Charge.create(chargeParams);
@@ -36,7 +36,7 @@ public class StripPayment implements PaymentGatway{
 
     public String getPaymentToken(PaymentDetails paymentDetails) throws APIConnectionException, APIException, AuthenticationException, InvalidRequestException, CardException {
         Map<String, Object> card = new HashMap<>();
-        card.put("number",paymentDetails.getCardNumber());
+        card.put("number", paymentDetails.getCardNumber());
         card.put("exp_month", paymentDetails.getExpMonth());
         card.put("exp_year", paymentDetails.getExpYear());
         card.put("cvc", paymentDetails.getCvc());

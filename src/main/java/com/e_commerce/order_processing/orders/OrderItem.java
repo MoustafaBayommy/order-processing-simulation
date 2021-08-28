@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 public class OrderItem {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     private String itemId;
 

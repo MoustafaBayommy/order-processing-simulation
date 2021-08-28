@@ -5,7 +5,6 @@ import com.e_commerce.order_processing.customers.CustomerService;
 import com.e_commerce.order_processing.items.ItemService;
 import com.e_commerce.order_processing.payments.PaymentService;
 import com.e_commerce.order_processing.util.HttpException;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

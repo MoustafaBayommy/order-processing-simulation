@@ -19,6 +19,7 @@ public class OrderBuilder {
         this.order.setId(id.toString());
         return this;
     }
+
     public OrderBuilder customer(Customer customer) {
         this.order.setCustomer(customer);
         return this;

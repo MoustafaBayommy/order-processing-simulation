@@ -15,7 +15,6 @@ public class OrderValidator {
     List<OrderPolicy> policies;
 
 
-
     public OrderValidator(@Autowired FraudCustomerPolicy fraudPolicy, @Autowired BasketLimitPolicy basketLimitPolicy) {
         policies = Arrays.asList(basketLimitPolicy, fraudPolicy);
     }
